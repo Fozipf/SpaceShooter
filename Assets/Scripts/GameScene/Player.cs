@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
     private int _lives = 3;
     [SerializeField]
     private int _score;
+    [SerializeField]
+    private int _shieldHits = 2;
 
     private bool _isTripleShotEnabled;
     private bool _isShieldEnabled;
@@ -34,6 +36,7 @@ public class Player : MonoBehaviour
 
     private UIManager _uiManager;
     private SpawnManager _spawnManager;
+    private SpriteRenderer _shieldSprite;
 
     [SerializeField]
     private AudioClip _laserSoundClip;
@@ -64,6 +67,8 @@ public class Player : MonoBehaviour
 
         _shieldVisualizer = this.gameObject.transform.GetChild(0).gameObject;
         _shieldVisualizer.SetActive(false);
+
+        _shieldSprite = _shieldVisualizer.GetComponent<SpriteRenderer>();
 
         transform.position = new Vector3(0, 0, 0);
     }
@@ -137,8 +142,26 @@ public class Player : MonoBehaviour
     {
         if (_isShieldEnabled)
         {
-            _isShieldEnabled = false;
-            _shieldVisualizer.SetActive(false);
+            
+            Color shieldColor = _shieldSprite.color;
+
+            switch (_shieldHits)
+            {
+                case 2:
+                    shieldColor.a = 0.6f;
+                    break;
+                case 1:
+                    shieldColor.a = 0.3f;
+                    break;
+                case 0:
+                    shieldColor.a = 1f;
+                    _isShieldEnabled = false;
+                    _shieldVisualizer.SetActive(false);
+                    break;
+            }
+            _shieldSprite.color = shieldColor;
+            _shieldHits--;
+            
             return;
         }
 
@@ -193,6 +216,7 @@ public class Player : MonoBehaviour
 
     public void ShieldActive()
     {
+        _shieldHits = 2;
         _isShieldEnabled = true;
         _shieldVisualizer.SetActive(true);
     }
