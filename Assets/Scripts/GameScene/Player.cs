@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _score;
     [SerializeField]
-    private int _shieldHits = 2;
+    private int _shieldStrength = 2;
 
     private bool _isTripleShotEnabled;
     private bool _isShieldEnabled;
@@ -145,7 +145,7 @@ public class Player : MonoBehaviour
             
             Color shieldColor = _shieldSprite.color;
 
-            switch (_shieldHits)
+            switch (_shieldStrength)
             {
                 case 2:
                     shieldColor.a = 0.6f;
@@ -160,7 +160,7 @@ public class Player : MonoBehaviour
                     break;
             }
             _shieldSprite.color = shieldColor;
-            _shieldHits--;
+            _shieldStrength--;
             
             return;
         }
@@ -216,9 +216,13 @@ public class Player : MonoBehaviour
 
     public void ShieldActive()
     {
-        _shieldHits = 2;
-        _isShieldEnabled = true;
-        _shieldVisualizer.SetActive(true);
+        if (!_isShieldEnabled)
+        {
+            _shieldStrength = 2;
+            _isShieldEnabled = true;
+            _shieldVisualizer.SetActive(true);
+        }
+        
     }
 
     public void AddScore(int points)
