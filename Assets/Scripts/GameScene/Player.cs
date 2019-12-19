@@ -6,9 +6,11 @@ public class Player : MonoBehaviour
 {
 
     [SerializeField]
-    private float _speed = 7f;
+    private float _speed = 5f;
     [SerializeField]
-    private float _speedMultiplier = 1.7f;
+    private float _speedMultiplier = 1.5f;
+    [SerializeField]
+    private float _speedMultiplierPowerup = 1.7f;
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
@@ -82,7 +84,15 @@ public class Player : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
 
         Vector3 movementDirection = new Vector3(horizontalInput, verticalInput, 0);
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            movementDirection *= _speedMultiplier;
+        }
+        
         transform.Translate(movementDirection * _speed * Time.deltaTime);
+        
+        
 
         //The following could be replaced with "transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);"
         if (transform.position.y > 2f)
@@ -173,11 +183,11 @@ public class Player : MonoBehaviour
     private IEnumerator SpeedBoostPowerDownRoutine()
     {
         yield return new WaitWhile(() => _isSpeedBoostEnabled);
-        _speed *= _speedMultiplier;
+        _speed *= _speedMultiplierPowerup;
         _isSpeedBoostEnabled = true;
 
         yield return new WaitForSeconds(5);
-        _speed /= _speedMultiplier;
+        _speed /= _speedMultiplierPowerup;
         _isSpeedBoostEnabled = false;
     }
 
