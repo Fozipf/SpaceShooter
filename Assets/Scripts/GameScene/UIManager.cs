@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour
     private Text _gameOverText;
     [SerializeField]
     private Text _restartText;
+    [SerializeField]
+    private Text _ammoText;
 
     [SerializeField]
     private Sprite[] _liveSprites;
@@ -46,6 +48,11 @@ public class UIManager : MonoBehaviour
     public void UpdateLives(int currentLives)
     {
         _LivesImg.sprite = _liveSprites[currentLives];
+    }
+
+    public void UpdateAmmoCount(int ammo)
+    {
+        _ammoText.text = "Ammo: " + ammo;
     }
 
     public void GameOverSequence()

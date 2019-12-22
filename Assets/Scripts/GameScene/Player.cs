@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
     private int _score;
     [SerializeField]
     private int _shieldStrength = 2;
+    [SerializeField]
+    private int _ammoCount = 15;
 
     private bool _isTripleShotEnabled;
     private bool _isShieldEnabled;
@@ -77,7 +79,7 @@ public class Player : MonoBehaviour
     {
         CalculateMovement();
 
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire && _ammoCount > 0)
         {
             FireLaser();
         }
@@ -135,6 +137,8 @@ public class Player : MonoBehaviour
             Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
         }
 
+        _ammoCount--;
+        _uiManager.UpdateAmmoCount(_ammoCount);
         _audioSource.Play();
     }
 
@@ -223,6 +227,12 @@ public class Player : MonoBehaviour
             _shieldVisualizer.SetActive(true);
         }
         
+    }
+
+    public void RefillAmmo()
+    {
+        _ammoCount = 15;
+        _uiManager.UpdateAmmoCount(_ammoCount);
     }
 
     public void AddScore(int points)
