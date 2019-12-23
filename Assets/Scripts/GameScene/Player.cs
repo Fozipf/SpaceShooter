@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     private GameObject _shieldVisualizer;
     [SerializeField]
     private GameObject _leftEngine, _rightEngine;
+    [SerializeField]
+    private GameObject _mainCamera;
 
     [SerializeField]
     private float _firerate = 0.15f;
@@ -187,6 +189,9 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
+        CameraShake cam = _mainCamera.GetComponent<CameraShake>();
+        cam.Shake(0.1f,0.1f, 0.5f,0.2f);
+
         if (_isShieldEnabled)
         {
 
