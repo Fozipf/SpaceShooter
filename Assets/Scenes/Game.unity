@@ -741,6 +741,7 @@ MonoBehaviour:
   - {fileID: 1806281941208767201, guid: ad68a019666a8c242be75b69e84c6d80, type: 3}
   - {fileID: 1806281941208767201, guid: 1d15e17ea3ffa4f4a83066bc1291af0d, type: 3}
   - {fileID: 1806281941208767201, guid: 0d155e81658553640a045420fae3eb4e, type: 3}
+  - {fileID: 1806281941208767201, guid: c1c412d4fe4a2574f8d2bd9ccdfc93eb, type: 3}
 --- !u!4 &843382551
 Transform:
   m_ObjectHideFlags: 0
@@ -1104,6 +1105,8 @@ MonoBehaviour:
   _laserPrefab: {fileID: 5293856353146082224, guid: 722fb407be8eea9408e626faf9452ee4,
     type: 3}
   _tripleShotPrefab: {fileID: 2872554071353362810, guid: ef5107c4e453daa4b932311443b533c0,
+    type: 3}
+  _multiDirectionShotPrefab: {fileID: 2872554071353362810, guid: cbe7817c0d8db114b9ca40b01673d033,
     type: 3}
   _shieldVisualizer: {fileID: 785410756}
   _leftEngine: {fileID: 1606565493}

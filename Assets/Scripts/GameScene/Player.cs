@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
+    private GameObject _multiDirectionShotPrefab;
+    [SerializeField]
     private GameObject _shieldVisualizer;
     [SerializeField]
     private GameObject _leftEngine, _rightEngine;
@@ -35,6 +37,7 @@ public class Player : MonoBehaviour
     private bool _isTripleShotEnabled;
     private bool _isShieldEnabled;
     private bool _isSpeedBoostEnabled;
+    private bool _isMultiDirectionShotEnabled;
 
     private UIManager _uiManager;
     private SpawnManager _spawnManager;
@@ -128,7 +131,11 @@ public class Player : MonoBehaviour
     {
         _canFire = Time.time + _firerate;
 
-        if (_isTripleShotEnabled)
+        if (_isMultiDirectionShotEnabled)
+        {
+            Instantiate(_multiDirectionShotPrefab, transform.position, Quaternion.identity);
+        }
+        else if (_isTripleShotEnabled)
         {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
         }
@@ -221,6 +228,17 @@ public class Player : MonoBehaviour
     private void TripleShotPowerDown()
     {
         _isTripleShotEnabled = false;
+    }
+
+    public void EnableMultiDirectionShot()
+    {
+        _isMultiDirectionShotEnabled = true;
+        Invoke("DisableMultiDirectionShot", 5);
+    }
+
+    private void DisableMultiDirectionShot()
+    {
+        _isMultiDirectionShotEnabled = false;
     }
 
     public void SpeedBoostActive()

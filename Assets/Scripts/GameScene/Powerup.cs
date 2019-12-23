@@ -6,7 +6,7 @@ public class Powerup : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 3;
-    [SerializeField] //0 = Triple Shot 1 = Speed 2 = Shield 3 = Ammo 4 = Health
+    [SerializeField] //0 = Triple Shot 1 = Speed 2 = Shield 3 = Ammo 4 = Health 5 = Multi Direction Shot
     private int powerupID;
     [SerializeField]
     private AudioClip _powerupClip;
@@ -47,6 +47,9 @@ public class Powerup : MonoBehaviour
                         break;
                     case 4:
                         player.HealPlayer();
+                        break;
+                    case 5:
+                        player.EnableMultiDirectionShot();
                         break;
                 }
             }
