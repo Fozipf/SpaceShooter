@@ -96,10 +96,10 @@ public class Player : MonoBehaviour
         {
             movementDirection *= _speedMultiplier;
         }
-        
+
         transform.Translate(movementDirection * _speed * Time.deltaTime);
-        
-        
+
+
 
         //The following could be replaced with "transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);"
         if (transform.position.y > 2f)
@@ -146,7 +146,7 @@ public class Player : MonoBehaviour
     {
         if (_isShieldEnabled)
         {
-            
+
             Color shieldColor = _shieldSprite.color;
 
             switch (_shieldStrength)
@@ -165,7 +165,7 @@ public class Player : MonoBehaviour
             }
             _shieldSprite.color = shieldColor;
             _shieldStrength--;
-            
+
             return;
         }
 
@@ -188,6 +188,27 @@ public class Player : MonoBehaviour
             _uiManager.GameOverSequence();
             this.gameObject.SetActive(false);
 
+        }
+    }
+
+    public void HealPlayer()
+    {
+        if (_lives < 3)
+        {
+            _lives++;
+
+
+            if (_lives == 2)
+            {
+                _rightEngine.SetActive(false);
+            }
+            else if (_lives == 3)
+            {
+                _leftEngine.SetActive(false);
+            }
+
+
+            _uiManager.UpdateLives(_lives);
         }
     }
 
@@ -226,7 +247,7 @@ public class Player : MonoBehaviour
             _isShieldEnabled = true;
             _shieldVisualizer.SetActive(true);
         }
-        
+
     }
 
     public void RefillAmmo()
