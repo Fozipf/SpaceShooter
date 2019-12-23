@@ -15,6 +15,10 @@ public class UIManager : MonoBehaviour
     private Text _restartText;
     [SerializeField]
     private Text _ammoText;
+    [SerializeField]
+    private Slider _thrusterHUD;
+    [SerializeField]
+    private GameObject _sliderFill;
 
     [SerializeField]
     private Sprite[] _liveSprites;
@@ -32,11 +36,11 @@ public class UIManager : MonoBehaviour
 
         if (_gameManager == null)
         {
-            Debug.Log("GameManager is NULL.");
+            Debug.LogError("GameManager is NULL.");
         }
         if (_player == null)
         {
-            Debug.Log("Player is NULL.");
+            Debug.LogError("Player is NULL.");
         }
     }
 
@@ -53,6 +57,19 @@ public class UIManager : MonoBehaviour
     public void UpdateAmmoCount(int ammo)
     {
         _ammoText.text = "Ammo: " + ammo;
+    }
+
+    public void UpdateThrusterHUD(int value)
+    {
+        _thrusterHUD.value = value;
+        if(value == 0)
+        {
+            _sliderFill.SetActive(false);
+        }
+        else
+        {
+            _sliderFill.SetActive(true);
+        }
     }
 
     public void GameOverSequence()

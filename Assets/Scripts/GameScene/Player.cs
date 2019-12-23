@@ -33,12 +33,16 @@ public class Player : MonoBehaviour
     private int _shieldStrength = 2;
     [SerializeField]
     private int _ammoCount = 15;
+    [SerializeField]
+    private int _thrustersCharge = 100;
 
     private bool _isTripleShotEnabled;
     private bool _isShieldEnabled;
     private bool _isSpeedBoostEnabled;
     private bool _isMultiDirectionShotEnabled;
+    private bool _thrustersActive;
 
+    [SerializeField]
     private UIManager _uiManager;
     private SpawnManager _spawnManager;
     private SpriteRenderer _shieldSprite;
@@ -49,18 +53,16 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(ThrustersRoutine());
+
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
-        _uiManager = GameObject.FindGameObjectWithTag("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
 
         if (_spawnManager == null)
         {
             Debug.LogError("The SpawnManager is NULL.");
         }
-        if (_uiManager == null)
-        {
-            Debug.LogError("The UI Manager is NULL.");
-        }
+
         if (_audioSource == null)
         {
             Debug.LogError("AudioSource on the Player is NULL.");
@@ -76,6 +78,8 @@ public class Player : MonoBehaviour
         _shieldSprite = _shieldVisualizer.GetComponent<SpriteRenderer>();
 
         transform.position = new Vector3(0, 0, 0);
+
+
     }
 
     void Update()
@@ -95,9 +99,18 @@ public class Player : MonoBehaviour
 
         Vector3 movementDirection = new Vector3(horizontalInput, verticalInput, 0);
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && _thrustersCharge > 0)
         {
             movementDirection *= _speedMultiplier;
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            _thrustersActive = true;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            _thrustersActive = false;
         }
 
         transform.Translate(movementDirection * _speed * Time.deltaTime);
@@ -123,6 +136,29 @@ public class Player : MonoBehaviour
         else if (transform.position.x < -11.3f)
         {
             transform.position = new Vector3(11.3f, transform.position.y, transform.position.z);
+        }
+
+    }
+
+    IEnumerator ThrustersRoutine()
+    {
+        while (true)
+        {
+            if (_thrustersActive && _thrustersCharge > 0)
+            {
+                _thrustersCharge--;
+            }
+
+            _uiManager.UpdateThrusterHUD(_thrustersCharge);
+
+            if (_thrustersCharge == 0)
+            {
+                yield return new WaitForSeconds(7);
+                _thrustersCharge = 100;
+                
+            }
+            
+            yield return new WaitForSeconds(0.025f);
         }
 
     }
