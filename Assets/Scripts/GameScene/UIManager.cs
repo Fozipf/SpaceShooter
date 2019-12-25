@@ -62,7 +62,7 @@ public class UIManager : MonoBehaviour
     public void UpdateThrusterHUD(int value)
     {
         _thrusterHUD.value = value;
-        if(value == 0)
+        if (value == 0)
         {
             _sliderFill.SetActive(false);
         }

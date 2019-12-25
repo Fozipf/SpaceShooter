@@ -80,8 +80,6 @@ public class Player : MonoBehaviour
         _shieldSprite = _shieldVisualizer.GetComponent<SpriteRenderer>();
 
         transform.position = new Vector3(0, 0, 0);
-
-
     }
 
     void Update()
@@ -118,7 +116,6 @@ public class Player : MonoBehaviour
         transform.Translate(movementDirection * _speed * Time.deltaTime);
 
 
-
         //The following could be replaced with "transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);"
         if (transform.position.y > 2f)
         {
@@ -130,7 +127,6 @@ public class Player : MonoBehaviour
         }
 
 
-
         if (transform.position.x > 11.3f)
         {
             transform.position = new Vector3(-11.3f, transform.position.y, transform.position.z);
@@ -139,7 +135,6 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(11.3f, transform.position.y, transform.position.z);
         }
-
     }
 
     IEnumerator ThrustersRoutine()
@@ -157,12 +152,10 @@ public class Player : MonoBehaviour
             {
                 yield return new WaitForSeconds(7);
                 _thrustersCharge = 100;
-                
             }
-            
+
             yield return new WaitForSeconds(0.025f);
         }
-
     }
 
     void FireLaser()
@@ -190,7 +183,7 @@ public class Player : MonoBehaviour
     public void Damage()
     {
         CameraShake cam = _mainCamera.GetComponent<CameraShake>();
-        cam.Shake(0.1f,0.1f, 0.5f,0.2f);
+        cam.Shake(0.1f, 0.1f, 0.5f, 0.2f);
 
         if (_isShieldEnabled)
         {
@@ -235,7 +228,6 @@ public class Player : MonoBehaviour
             _spawnManager.OnPlayerDeath();
             _uiManager.GameOverSequence();
             this.gameObject.SetActive(false);
-
         }
     }
 
@@ -245,7 +237,6 @@ public class Player : MonoBehaviour
         {
             _lives++;
 
-
             if (_lives == 2)
             {
                 _rightEngine.SetActive(false);
@@ -254,7 +245,6 @@ public class Player : MonoBehaviour
             {
                 _leftEngine.SetActive(false);
             }
-
 
             _uiManager.UpdateLives(_lives);
         }

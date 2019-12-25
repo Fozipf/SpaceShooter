@@ -39,9 +39,9 @@ public class SpawnManager : MonoBehaviour
         while (!_stopSpawning)
         {
             int randomPowerupID = Random.Range(0, _powerups.Length);
-            
-            Vector3 _spawnPosition = new Vector3(Random.Range(-8f, 8f), 7, 0);      
-            
+
+            Vector3 _spawnPosition = new Vector3(Random.Range(-8f, 8f), 7, 0);
+
             if (randomPowerupID == 5)
             {
                 int random = Random.Range(0, 4);
