@@ -34,7 +34,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _shieldStrength = 2;
     [SerializeField]
-    private int _ammoCount = 15;
+    private int _ammoCount;
+    private int _maxAmmo = 15;
     [SerializeField]
     private int _thrustersCharge = 100;
 
@@ -55,6 +56,8 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        _ammoCount = _maxAmmo;
+
         StartCoroutine(ThrustersRoutine());
 
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
@@ -176,7 +179,7 @@ public class Player : MonoBehaviour
         }
 
         _ammoCount--;
-        _uiManager.UpdateAmmoCount(_ammoCount);
+        _uiManager.UpdateAmmoCount(_ammoCount, _maxAmmo);
         _audioSource.Play();
     }
 
@@ -301,8 +304,8 @@ public class Player : MonoBehaviour
 
     public void RefillAmmo()
     {
-        _ammoCount = 15;
-        _uiManager.UpdateAmmoCount(_ammoCount);
+        _ammoCount = _maxAmmo;
+        _uiManager.UpdateAmmoCount(_ammoCount, _maxAmmo);
     }
 
     public void AddScore(int points)
