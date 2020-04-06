@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
     private bool _isShieldEnabled;
     private bool _isSpeedBoostEnabled;
     private bool _isMultiDirectionShotEnabled;
+    private bool _isSlowDownActive;
     private bool _thrustersActive;
 
     [SerializeField]
@@ -289,6 +290,26 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5);
         _speed /= _speedMultiplierPowerup;
         _isSpeedBoostEnabled = false;
+    }
+
+    public void Slowdown()
+    {
+        if (!_isSlowDownActive)
+        {
+
+            float initialSpeed = _isSpeedBoostEnabled ? _speed / _speedMultiplierPowerup : _speed;
+
+            _isSlowDownActive = true;
+            _speed = 3.0f;
+            StartCoroutine(DisableSlowdownRoutine(initialSpeed));
+        }
+    }
+
+    private IEnumerator DisableSlowdownRoutine(float initialSpeed)
+    {
+        yield return new WaitForSeconds(5.0f);
+        _speed = initialSpeed;
+        _isSlowDownActive = false;
     }
 
     public void ShieldActive()

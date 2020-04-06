@@ -855,6 +855,7 @@ MonoBehaviour:
   - {fileID: 1806281941208767201, guid: 1d15e17ea3ffa4f4a83066bc1291af0d, type: 3}
   - {fileID: 1806281941208767201, guid: 0d155e81658553640a045420fae3eb4e, type: 3}
   - {fileID: 1806281941208767201, guid: c1c412d4fe4a2574f8d2bd9ccdfc93eb, type: 3}
+  - {fileID: 1806281941208767201, guid: 322afcf6c0c0c184db89078c1ed15c1b, type: 3}
   _uiManager: {fileID: 1118423259}
 --- !u!4 &843382551
 Transform:
