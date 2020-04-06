@@ -19,6 +19,8 @@ public class UIManager : MonoBehaviour
     private Slider _thrusterHUD;
     [SerializeField]
     private GameObject _sliderFill;
+    [SerializeField]
+    private Text _waveCountdown;
 
     [SerializeField]
     private Sprite[] _liveSprites;
@@ -87,6 +89,11 @@ public class UIManager : MonoBehaviour
         StartCoroutine(GameOverFlickerRoutine());
 
         _gameManager.GameOver();
+    }
+
+    public void UpdateWaveCountdown(float remainingSeconds)
+    {
+        _waveCountdown.text = remainingSeconds+" sec";
     }
 
     IEnumerator GameOverFlickerRoutine()

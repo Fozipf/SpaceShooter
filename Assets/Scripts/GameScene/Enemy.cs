@@ -35,10 +35,11 @@ public class Enemy : MonoBehaviour
 
         _movementType = (MovementType)(Random.Range(0, Enum.GetValues(typeof(MovementType)).Length));
 
-        if(_movementType == MovementType.MoveAtAngle)
+        if (_movementType == MovementType.MoveAtAngle)
         {
             transform.rotation = Quaternion.Euler(0, 0, 30);
-        }else if(_movementType == MovementType.SideToSide)
+        }
+        else if (_movementType == MovementType.SideToSide)
         {
             int x = Random.Range(0, 2);
             _movementDirection = (x == 0 ? Vector3.left : Vector3.right);
@@ -51,7 +52,12 @@ public class Enemy : MonoBehaviour
             Debug.LogError("AudioSource on the Enemy is NULL.");
         }
 
-        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            _player = playerObject.GetComponent<Player>();
+        }
+
         if (_player == null)
         {
             Debug.LogError("_player is NULL.");
@@ -87,9 +93,9 @@ public class Enemy : MonoBehaviour
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-        if(_movementType == MovementType.SideToSide)
+        if (_movementType == MovementType.SideToSide)
         {
-            
+
 
             transform.Translate(_movementDirection * _speed * Time.deltaTime);
         }
@@ -116,6 +122,7 @@ public class Enemy : MonoBehaviour
         if (other.tag.Equals("Player"))
         {
             _isEnemyDestroyed = true;
+            SpawnManager._enemiesKilled++;
 
             Player player = other.GetComponent<Player>();
 
@@ -135,6 +142,7 @@ public class Enemy : MonoBehaviour
         if (other.tag.Equals("Laser"))
         {
             _isEnemyDestroyed = true;
+            SpawnManager._enemiesKilled++;
 
             Laser laser = other.GetComponent<Laser>();
             if (!laser._isEnemyLaser)
@@ -154,5 +162,10 @@ public class Enemy : MonoBehaviour
                 Destroy(this.gameObject, 2.8f);
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+
     }
 }
